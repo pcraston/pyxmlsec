@@ -93,7 +93,10 @@ def extract_cflags(cflags):
             if flag[2:] not in include_dirs:
                 include_dirs.append(flag[2:])
         elif flag[:2] == "-D":
-            t = tuple(flag[2:].split('='))
+            if "=" in flag:
+                t = tuple(flag[2:].split('='))
+            else:
+                t = tuple([flag[2:], 1])
             if len(t) == 1:
                 t = (t[0], None) 
             if t not in define_macros:
